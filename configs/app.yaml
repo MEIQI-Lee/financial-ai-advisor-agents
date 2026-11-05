@@ -1,0 +1,4 @@
+max_replans: 2
+max_rows: 50
+history_limit: 6
+chart_enabled: true

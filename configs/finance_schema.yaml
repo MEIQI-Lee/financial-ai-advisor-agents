@@ -1,0 +1,41 @@
+table: mock_securities
+columns:
+  symbol: TEXT
+  name: TEXT
+  sector: TEXT
+  trade_date: TEXT
+  close: REAL
+  rsi_14: REAL
+  ma_trend: TEXT
+  macd_signal: TEXT
+  boll_upper: REAL
+  boll_middle: REAL
+  boll_lower: REAL
+  debt_ratio: REAL
+  gross_margin: REAL
+  eps: REAL
+  dividend_yield: REAL
+  pe_ratio: REAL
+  pb_ratio: REAL
+entities:
+  RSI超卖: {column: rsi_14, operator: "<", value: 30, entity_type: 股票}
+  RSI超买: {column: rsi_14, operator: ">", value: 70, entity_type: 股票}
+  均线多头排列: {column: ma_trend, operator: "=", value: BULLISH, entity_type: 股票}
+  MACD金叉: {column: macd_signal, operator: "=", value: GOLDEN_CROSS, entity_type: 股票}
+  布林线下轨以下: {column: close, operator: "<", value: boll_lower, entity_type: 股票}
+  布林线下轨突破: {column: close, operator: "<", value: boll_lower, entity_type: 股票}
+  布林线上轨以上: {column: close, operator: ">", value: boll_upper, entity_type: 股票}
+  布林线中轨以上: {column: close, operator: ">", value: boll_middle, entity_type: 股票}
+  资产负债率: {column: debt_ratio, operator: "", value: "", entity_type: 股票}
+  毛利率: {column: gross_margin, operator: "", value: "", entity_type: 股票}
+  每股收益率: {column: eps, operator: "", value: "", entity_type: 股票}
+  股息率: {column: dividend_yield, operator: "", value: "", entity_type: 股票}
+  市盈率: {column: pe_ratio, operator: "", value: "", entity_type: 股票}
+  市净率: {column: pb_ratio, operator: "", value: "", entity_type: 股票}
+aliases:
+  RSI 超卖: RSI超卖
+  RSI 超买: RSI超买
+  均线多头: 均线多头排列
+  布林线下轨: 布林线下轨以下
+  布林线上轨: 布林线上轨以上
+  布林线中轨: 布林线中轨以上
