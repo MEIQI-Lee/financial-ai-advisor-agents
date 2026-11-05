@@ -1,16 +1,12 @@
 # Financial AI Advisor Agents
 
-一个面向个人学习与技术作品集的**多智能体金融问答系统独立重实现**。项目围绕“规划—执行—验证—融合”四阶段流水线，组织数据库问答、持仓分析、KYC 用户画像、RAG 和金融定量模型五条业务链路，并演示大模型与确定性金融小模型的协同方式。
-
-**项目地址**：[github.com/MEIQI-Lee/financial-ai-advisor-agents](https://github.com/MEIQI-Lee/financial-ai-advisor-agents)<br>
-**作者主页**：[MEIQI-Lee](https://github.com/MEIQI-Lee)<br>
-**开源许可**：MIT License
+**多智能体金融投顾系统**。项目围绕“规划—执行—验证—融合”四阶段流水线，组织数据库问答、持仓分析、KYC 用户画像、RAG 和金融定量模型五条业务链路，并演示大模型与确定性金融小模型的协同方式。
 
 > 文件状态：【完整可运行】<br>
 > Web Demo：【完整可运行】（原生 HTML/CSS/JavaScript，已连接 FastAPI）<br>
 > 核心后端：【完整可运行】（四阶段流水线、数据库问答与记忆模块）<br>
 > 业务模块：【完整可运行】（持仓、KYC、RAG 与金融小模型；复杂定量逻辑【需自研理解】）<br>
-> 测试基线：68 项测试通过。所有证券、行情、持仓、市场环境和知识语料均为虚构或本地演示数据。
+> 测试基线：68 项测试通过。所有证券、行情、持仓、市场环境和知识语料均为本地测试数据
 
 ## 目录
 
