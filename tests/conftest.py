@@ -14,6 +14,7 @@ def settings(tmp_path):
         database_path=tmp_path / "mock.db",
         memory_path=tmp_path / "memory.db",
         chart_dir=tmp_path / "charts",
+        rag_index_path=tmp_path / "knowledge_index.json",
     )
 
 

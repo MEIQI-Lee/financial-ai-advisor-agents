@@ -30,6 +30,9 @@ def main() -> int:
     agent.add_argument("--user-id", default="demo-user")
 
     subparsers.add_parser("init-data", help="Rebuild the Mock SQLite database")
+    serve = subparsers.add_parser("serve", help="Run the HTTP API and Web UI")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8000)
     args = parser.parse_args()
 
     try:
@@ -40,6 +43,13 @@ def main() -> int:
             output = {"database_path": str(settings.database_path), "status": "created"}
         else:
             app = build_application(settings)
+            if args.command == "serve":
+                import uvicorn
+
+                from financial_ai_advisor_agents.api import create_api
+
+                uvicorn.run(create_api(app), host=args.host, port=args.port)
+                return 0
             output = _run_command(app, args)
         print(_json(output))
         return 0

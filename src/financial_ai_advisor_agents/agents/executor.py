@@ -57,7 +57,31 @@ class ExecutionAgent:
                 reference="mock_securities",
                 detail={"sql": query_result["sql"], "row_count": query_result["row_count"]},
             ))
-        chart_path = data.get("postprocess", {}).get("chart_path", "")
-        if chart_path:
-            evidence.append(Evidence(kind="chart", reference=chart_path))
+        chart_url = data.get("postprocess", {}).get("chart_url", "")
+        if chart_url:
+            evidence.append(Evidence(kind="chart", reference=chart_url))
+        if {"portfolio", "risk", "optimization"} <= data.keys():
+            evidence.append(Evidence(
+                kind="portfolio",
+                reference="mock_portfolio",
+                detail={"holding_count": len(data["holdings"]), "risk_score": data["risk"]["score"]},
+            ))
+        if {"answers", "completed", "question", "allocation"} <= data.keys():
+            evidence.append(Evidence(
+                kind="kyc",
+                reference=f"memory://profile/{data['user_id']}",
+                detail={"step": data["step"], "completed": data["completed"]},
+            ))
+        if {"query", "answer", "sources", "status"} <= data.keys():
+            evidence.extend(Evidence(
+                kind="knowledge",
+                reference=f"{source['source']}#page={source['page']}",
+                detail={"title": source["title"], "chunk_id": source["chunk_id"], "score": source["score"]},
+            ) for source in data["sources"])
+        if "scores" in data:
+            evidence.append(Evidence(
+                kind="financial_model",
+                reference="mock_securities_csv",
+                detail={"count": len(data["scores"])},
+            ))
         return evidence

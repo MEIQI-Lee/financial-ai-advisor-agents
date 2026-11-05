@@ -1,0 +1,56 @@
+{
+  "holdings": [
+    {
+      "symbol": "DEMO01",
+      "name": "示例科技",
+      "sector": "科技",
+      "quantity": 100,
+      "current_price": 18.42,
+      "cost_price": 16.0,
+      "period_return": 0.12,
+      "return_history": [0.021, -0.012, 0.034, 0.018, -0.025, 0.041, 0.009, 0.027, -0.016, 0.03, 0.014, -0.006]
+    },
+    {
+      "symbol": "DEMO02",
+      "name": "示例制造",
+      "sector": "制造",
+      "quantity": 80,
+      "current_price": 26.75,
+      "cost_price": 24.5,
+      "period_return": 0.08,
+      "return_history": [0.012, 0.008, -0.009, 0.022, 0.016, -0.014, 0.025, 0.011, 0.019, -0.007, 0.013, 0.006]
+    },
+    {
+      "symbol": "DEMO03",
+      "name": "示例消费",
+      "sector": "消费",
+      "quantity": 150,
+      "current_price": 12.08,
+      "cost_price": 11.2,
+      "period_return": 0.06,
+      "return_history": [0.008, 0.015, 0.011, -0.006, 0.018, 0.009, -0.012, 0.014, 0.007, 0.016, -0.004, 0.01]
+    },
+    {
+      "symbol": "DEMO04",
+      "name": "示例医药",
+      "sector": "医药",
+      "quantity": 50,
+      "current_price": 31.2,
+      "cost_price": 29.0,
+      "period_return": 0.04,
+      "return_history": [-0.008, 0.019, 0.013, 0.006, -0.018, 0.024, 0.016, -0.005, 0.012, 0.008, -0.011, 0.017]
+    },
+    {
+      "symbol": "CASH",
+      "name": "示例现金",
+      "sector": "现金",
+      "quantity": 1,
+      "current_price": 2000.0,
+      "cost_price": 2000.0,
+      "period_return": 0.003,
+      "return_history": [0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025, 0.00025]
+    }
+  ],
+  "benchmark_return": 0.045,
+  "benchmark_history": [0.01, 0.006, 0.009, 0.012, -0.004, 0.015, 0.011, 0.007, 0.005, 0.009, -0.003, 0.008]
+}

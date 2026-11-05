@@ -55,6 +55,7 @@ class QueryResult(BaseModel):
 class PostProcessResult(BaseModel):
     summary: dict[str, Any] = Field(default_factory=dict)
     chart_path: str = ""
+    chart_url: str = ""
 
 
 class DatabaseQAResult(BaseModel):

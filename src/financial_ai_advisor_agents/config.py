@@ -21,6 +21,10 @@ class Settings:
     prompt_dir: Path
     schema_path: Path
     mock_data_path: Path
+    portfolio_data_path: Path
+    knowledge_data_path: Path
+    rag_index_path: Path
+    web_dir: Path
     max_replans: int
     max_rows: int
     history_limit: int
@@ -45,6 +49,10 @@ class Settings:
             prompt_dir=RESOURCE_ROOT / "prompts",
             schema_path=RESOURCE_ROOT / "configs" / "finance_schema.yaml",
             mock_data_path=RESOURCE_ROOT / "data" / "mock" / "securities.csv",
+            portfolio_data_path=RESOURCE_ROOT / "data" / "mock" / "portfolio.json",
+            knowledge_data_path=RESOURCE_ROOT / "data" / "mock" / "knowledge.json",
+            rag_index_path=runtime / "knowledge_index.json",
+            web_dir=RESOURCE_ROOT / "web",
             max_replans=int(os.getenv("FINAGENT_MAX_REPLANS", app_config["max_replans"])),
             max_rows=int(os.getenv("FINAGENT_MAX_ROWS", app_config["max_rows"])),
             history_limit=app_config["history_limit"],

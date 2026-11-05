@@ -59,3 +59,35 @@ def test_pipeline_stops_after_retry_limit(app):
     assert result.replan_count == 1
     assert result.final.status == "failed"
     assert "未将失败任务" in result.final.warnings[0]
+
+
+def test_pipeline_runs_portfolio_analysis(app):
+    result = app.pipeline.run("分析示例持仓并做组合优化", "portfolio-user")
+    assert result.final.status == "success"
+    assert result.plan.tasks[0].executor_name == "portfolio_analysis"
+    assert result.task_results[0].data["optimization"]["weights"]
+    assert result.task_results[0].evidence[0].kind == "portfolio"
+    assert "虚构示例持仓" in result.final.answer
+
+
+def test_pipeline_reports_kyc_progress_without_allocation(app):
+    result = app.pipeline.run("查看我的KYC风险画像", "kyc-user")
+    assert result.final.status == "success"
+    assert "已完成 0/5 题" in result.final.answer
+    assert result.task_results[0].data["allocation"] == {}
+
+
+def test_pipeline_runs_rag_with_citations(app):
+    result = app.pipeline.run("什么是最大回撤", "rag-user")
+    assert result.final.status == "success"
+    assert result.final.sources
+    assert result.final.sources[0].kind == "knowledge"
+    assert "[1]" in result.final.answer
+
+
+def test_pipeline_runs_financial_model_scores(app):
+    result = app.pipeline.run("计算股票的多维指标和综合评分", "model-user")
+    assert result.final.status == "success"
+    assert result.plan.tasks[0].executor_type == ExecutorType.FINANCIAL_MODEL
+    assert len(result.task_results[0].data["scores"]) == 6
+    assert "未来收益预测" in result.final.warnings[0]

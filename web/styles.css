@@ -202,8 +202,9 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .success-label svg { width: 12px; height: 12px; }
 
 .stock-layout { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(260px, .75fr); gap: 18px; }
-.stock-main, .stock-side { display: grid; align-content: start; gap: 18px; }
-.query-card, .result-card, .chart-card, .process-card { padding: 20px; }
+.stock-main, .stock-side { min-width: 0; display: grid; align-content: start; gap: 18px; }
+.stock-main > *, .stock-side > * { min-width: 0; }
+.query-card, .result-card, .chart-card, .process-card, .fundamental-card { padding: 20px; }
 .stock-query-row { margin-top: 12px; display: flex; gap: 9px; }
 .stock-query-row input { min-width: 0; flex: 1; padding: 10px 12px; color: var(--ink); background: #fafbfa; border: 1px solid var(--line); border-radius: 9px; font-size: 11px; }
 .entity-row { margin-top: 13px; display: flex; align-items: center; flex-wrap: wrap; gap: 7px; }
@@ -249,6 +250,16 @@ td small { margin-top: 3px; color: var(--soft); font-size: 7px; }
 .compact-process li > span { width: 24px; height: 24px; display: grid; place-items: center; color: var(--accent); background: var(--accent-soft); border-radius: 7px; font-size: 8px; }
 .compact-process strong, .compact-process small { display: block; }
 .compact-process strong { font-size: 9px; }.compact-process small { margin-top: 3px; color: var(--soft); font-size: 8px; }
+.table-link { display: block; margin-top: 5px; padding: 0; color: var(--accent); background: none; border: 0; font-size: 8px; cursor: pointer; }
+.fundamental-title { margin-top: 16px; display: flex; justify-content: space-between; gap: 12px; color: var(--ink); font-size: 11px; }
+.fundamental-title span { color: var(--gold); white-space: nowrap; }
+.fundamental-score-grid { margin-top: 12px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.fundamental-score-grid div { padding: 9px; background: #f6f8fc; border-radius: 7px; }
+.fundamental-score-grid span, .fundamental-score-grid strong { display: block; }
+.fundamental-score-grid span { color: var(--soft); font-size: 8px; }
+.fundamental-score-grid strong { margin-top: 4px; font-size: 14px; }
+.fundamental-note { color: var(--muted); font-size: 9px; line-height: 1.7; }
+.fundamental-flags { padding-left: 16px; color: var(--muted); font-size: 9px; line-height: 1.7; }
 
 .portfolio-overview { display: grid; grid-template-columns: 1fr 1.15fr 1fr; gap: 18px; }
 .upload-panel { overflow: hidden; }

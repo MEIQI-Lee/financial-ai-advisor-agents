@@ -28,11 +28,14 @@ class DataPostprocessingAgent:
             "truncated": result.truncated,
         }
         chart_path = ""
+        chart_url = ""
         if self.chart_enabled and result.rows:
             metric = self._chart_column(result, preferred_columns or [])
             if metric:
-                chart_path = str(self._create_chart(result, metric))
-        return PostProcessResult(summary=summary, chart_path=chart_path)
+                path = self._create_chart(result, metric)
+                chart_path = str(path)
+                chart_url = f"/charts/{path.name}"
+        return PostProcessResult(summary=summary, chart_path=chart_path, chart_url=chart_url)
 
     def _chart_column(self, result: QueryResult, preferred: list[str]) -> str:
         candidates = preferred + result.columns

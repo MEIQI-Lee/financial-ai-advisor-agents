@@ -7,6 +7,7 @@ def test_database_workflow_returns_rows_and_chart(app):
     assert [row["symbol"] for row in result.query_result.rows] == ["DEMO01", "DEMO02", "DEMO03"]
     assert result.postprocess.chart_path
     assert Path(result.postprocess.chart_path).exists()
+    assert result.postprocess.chart_url == f"/charts/{Path(result.postprocess.chart_path).name}"
 
 
 def test_database_workflow_treats_empty_rows_as_valid_result(app):

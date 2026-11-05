@@ -20,7 +20,12 @@ from financial_ai_advisor_agents.database_qa.text2sql_agent import Text2SQLAgent
 from financial_ai_advisor_agents.database_qa.workflow import DatabaseQAWorkflow
 from financial_ai_advisor_agents.llm import create_llm
 from financial_ai_advisor_agents.llm.base import StructuredLLM
+from financial_ai_advisor_agents.financial_models.suite import FinancialModelSuite
+from financial_ai_advisor_agents.kyc.workflow import KYCWorkflow
 from financial_ai_advisor_agents.memory.store import MemoryStore
+from financial_ai_advisor_agents.portfolio.service import PortfolioService
+from financial_ai_advisor_agents.rag.index import LocalBM25Index
+from financial_ai_advisor_agents.rag.workflow import RAGWorkflow
 from financial_ai_advisor_agents.schemas.pipeline import ExecutorType
 from financial_ai_advisor_agents.tools.registry import CapabilityRegistry
 from financial_ai_advisor_agents.workflows.pipeline import FourStagePipeline
@@ -38,6 +43,12 @@ class Application:
     executor: ExecutionAgent
     validator: ValidationAgent
     synthesizer: SynthesisAgent
+    memory: MemoryStore
+    portfolio_service: PortfolioService
+    financial_models: FinancialModelSuite
+    kyc_workflow: KYCWorkflow
+    rag_index: LocalBM25Index
+    rag_workflow: RAGWorkflow
 
 
 def build_application(settings: Settings | None = None, mode: str | None = None) -> Application:
@@ -58,6 +69,14 @@ def build_application(settings: Settings | None = None, mode: str | None = None)
         SQLExecutionAgent(database),
         DataPostprocessingAgent(settings.chart_dir, settings.chart_enabled),
     )
+    memory = MemoryStore(settings.memory_path)
+    portfolio_service = PortfolioService(settings.portfolio_data_path)
+    financial_models = FinancialModelSuite(settings.mock_data_path)
+    kyc_workflow = KYCWorkflow(memory)
+    rag_index = LocalBM25Index(settings.knowledge_data_path, settings.rag_index_path)
+    if not settings.rag_index_path.exists():
+        rag_index.build()
+    rag_workflow = RAGWorkflow(rag_index)
     capabilities = CapabilityRegistry()
 
     def database_handler(task, context):
@@ -72,11 +91,34 @@ def build_application(settings: Settings | None = None, mode: str | None = None)
         "指标实体抽取、语义对齐、Text2SQL、只读SQLite查询和图表后处理",
         database_handler,
     )
+    capabilities.register(
+        "portfolio_analysis",
+        ExecutorType.WORKFLOW,
+        "示例持仓的市值权重、收益归因、风险诊断与约束组合优化",
+        lambda task, context: portfolio_service.analyze_sample().model_dump(mode="json"),
+    )
+    capabilities.register(
+        "kyc",
+        ExecutorType.WORKFLOW,
+        "五题KYC状态、风险画像与可解释资产配置",
+        lambda task, context: kyc_workflow.status(context["memory"].user_id).model_dump(mode="json"),
+    )
+    capabilities.register(
+        "rag",
+        ExecutorType.WORKFLOW,
+        "本地BM25知识索引检索与带引用的教育回答",
+        lambda task, context: rag_workflow.run(context["query"]).model_dump(mode="json"),
+    )
+    capabilities.register(
+        "financial_models",
+        ExecutorType.FINANCIAL_MODEL,
+        "虚构证券的估值、质量、技术、股息评分与基本面风险标记",
+        lambda task, context: {"scores": [item.model_dump(mode="json") for item in financial_models.score_securities()]},
+    )
     planner = PlanningAgent(llm, prompts, capabilities)
     executor = ExecutionAgent(capabilities)
     validator = ValidationAgent(llm, prompts)
     synthesizer = SynthesisAgent(llm, prompts)
-    memory = MemoryStore(settings.memory_path)
     pipeline = FourStagePipeline(
         planner,
         executor,
@@ -87,14 +129,20 @@ def build_application(settings: Settings | None = None, mode: str | None = None)
         settings.history_limit,
     )
     return Application(
-        settings,
-        schema_registry,
-        llm,
-        database_workflow,
-        capabilities,
-        pipeline,
-        planner,
-        executor,
-        validator,
-        synthesizer,
+        settings=settings,
+        schema_registry=schema_registry,
+        llm=llm,
+        database_workflow=database_workflow,
+        capabilities=capabilities,
+        pipeline=pipeline,
+        planner=planner,
+        executor=executor,
+        validator=validator,
+        synthesizer=synthesizer,
+        memory=memory,
+        portfolio_service=portfolio_service,
+        financial_models=financial_models,
+        kyc_workflow=kyc_workflow,
+        rag_index=rag_index,
+        rag_workflow=rag_workflow,
     )

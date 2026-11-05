@@ -13,4 +13,5 @@ def test_validator_rejects_failed_required_task(app):
 def test_synthesizer_states_capability_boundary(app):
     result = app.synthesizer.run("预测明天涨停股", [])
     assert result.status == "unsupported"
-    assert "待实现" in result.answer
+    assert "超出已注册能力" in result.answer
+    assert "待实现" not in result.answer
