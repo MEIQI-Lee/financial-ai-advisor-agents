@@ -29,8 +29,6 @@
 - [测试与独立运行](#测试与独立运行)
 - [数据与隐私](#数据与隐私)
 - [合规与免责声明](#合规与免责声明)
-- [实现路线](#实现路线)
-- [参考与致谢](#参考与致谢)
 
 ## 项目背景
 
@@ -511,34 +509,6 @@ pytest tests/integration/test_pipeline.py
 5. Mock 数据、模型输出和生成内容可能包含错误，不应作为真实交易依据。
 6. 项目不提供下单、自动调仓或实盘账户操作能力。
 7. 使用者应独立核验数据、公式和输出，并遵守适用的法律法规及第三方服务条款。
-
-## 实现路线
-
-- [x] 完成功能范围与核心架构设计；
-- [x] 完成目录结构与数据契约设计；
-- [x] 完成 README 初稿；
-- [x] 完成可独立运行的静态 Web 交互 Demo；
-- [x] 实现四阶段主流程与规划 Agent；
-- [x] 实现指标抽取、语义分析和 Text2SQL 链路；
-- [x] 实现工具注册中心、Mock 数据和记忆模块；
-- [ ] 实现持仓分析、KYC 和 RAG 子链路；
-- [ ] 实现多维指标、归因、组合优化、基本面与风险模型；
-- [x] 完成核心 Agent 单测和集成测试（29 项）；
-- [ ] 增加后端 HTTP API 并连接 Web Mock 界面；
-- [ ] 补充后端运行录屏与更多真实执行结果；
-- [x] 完成开源发布前检查。
-
-涉及重规划状态机、Text2SQL 安全约束、收益归因、组合优化和资产配置映射的部分标记为【需自研理解】，应在公开展示或面试讲解前完成公式与代码级复核。
-
-## 参考与致谢
-
-以下公开仓库仅用于学习产品文档组织、README 展示、多智能体编排、RAG 和 Agent 通信设计，不复制其代码：
-
-- [Tonghuashun_AI_ProductManager](https://github.com/Aalan020912/Tonghuashun_AI_ProductManager)
-- [my-projects](https://github.com/LUOCHENGQING/my-projects)
-- [FinAgent](https://github.com/dalianmao000/FinAgent)
-- [financial-advisor-agent-rag](https://github.com/jayhuang298-ops/financial-advisor-agent-rag)
-- [multi-agent-financial-advisor](https://github.com/Obsidian422/multi-agent-financial-advisor)
 
 ## License
 
